@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/Data-Structures-and-Algorithms.iml" filepath="$PROJECT_DIR$/.idea/Data-Structures-and-Algorithms.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ToolBox/ToolBox.iml" filepath="$PROJECT_DIR$/ToolBox/ToolBox.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ToolBox/week1_programming_challenges/_1_sum_of_two_digits/_1_sum_of_two_digits.iml" filepath="$PROJECT_DIR$/ToolBox/week1_programming_challenges/_1_sum_of_two_digits/_1_sum_of_two_digits.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ToolBox/week1_programming_challenges/week1_programming_challenges.iml" filepath="$PROJECT_DIR$/ToolBox/week1_programming_challenges/week1_programming_challenges.iml" />
+    </modules>
+  </component>
+</project>
