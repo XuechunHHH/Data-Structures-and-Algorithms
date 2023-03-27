@@ -7,6 +7,7 @@
       <module fileurl="file://$PROJECT_DIR$/ToolBox/week1_programming_challenges/_1_sum_of_two_digits/_1_sum_of_two_digits.iml" filepath="$PROJECT_DIR$/ToolBox/week1_programming_challenges/_1_sum_of_two_digits/_1_sum_of_two_digits.iml" />
       <module fileurl="file://$PROJECT_DIR$/ToolBox/week1_programming_challenges/week1_programming_challenges.iml" filepath="$PROJECT_DIR$/ToolBox/week1_programming_challenges/week1_programming_challenges.iml" />
       <module fileurl="file://$PROJECT_DIR$/ToolBox/week2_algorithmic_warmup/week2_algorithmic_warmup.iml" filepath="$PROJECT_DIR$/ToolBox/week2_algorithmic_warmup/week2_algorithmic_warmup.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ToolBox/week3_greedy_algorithms/week3_greedy_algorithms.iml" filepath="$PROJECT_DIR$/ToolBox/week3_greedy_algorithms/week3_greedy_algorithms.iml" />
     </modules>
   </component>
 </project>
