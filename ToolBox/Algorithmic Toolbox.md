@@ -293,29 +293,29 @@ Sort + PointsCoveredSorted is $O(nlogn)$.
 
 #### Maximum Loot
 
-A burglar breaks in a store with a bag has a maximum capacity of 15 kilograms and the items are all fractional. How to take the items to maximize the benefits?
+A burglar breaks in a store with a bag can carry a maximum of 15 kilograms. How to take the goods to maximize the benefits?
 
 ##### Fractional knapsack
 
-**Input: ** Weights $w_1,w_2,...,w_n$ and values $v_1,v_2,...,v_n$ of n items; capacity W.
+**Input: ** Weights $w_1,w_2,...,w_n$
 
-**Output: ** The maximum total value of fractions of items that fit into a knapsack of capacity W.
+**Output:**  The maximum total value of fractions of items that fit into a knapsack of capacity W.
 
-##### Safe choice
+### **Safe choice**
 
 Take as much as possible of an item with the maximal value per unit of weight.
 
-##### Greedy Algorithm
+### **Greedy Algorithm**
 
 - While knapsack is not full
-- Choose item $i$ with maximum $\frac{v_i}{w_i}$
+- Choose item i with maximum $\frac{v_i}{w_i}$
 - If item fits into knapsack, take all of it
 - Otherwise, take as much as possible to fill the knapsack
 - Return total value and amounts taken
 
-##### Code
+### **Code**
 
-```text
+```
 ## BestItem(w_1,v_1,w_2,v_2,...,w_n,v_n)
 maxValuePerWeight = 0
 bestItem = 0
@@ -341,6 +341,378 @@ repeat n times:
 return (totalValue,amounts)
 ```
 
-**Running time: ** BestItem is $O(n)$, Knapsack is $O(n^2).$
+**Running time:**  BestItem is $O(n)$ , Knapsack is $O(n^2)$ .
 
-**Optimize: ** Sort $\frac{v_i}{w_i}$ by decreasing which is $O(logn)$. In this way, Knapsack is $O(nlogn).$
+**Optimize:**  Sort $\frac{v_i}{w_i}$by decreasing which is $O(logn)$ . In this way, Knapsack is$O(nlogn).$
+
+### Linear Search
+
+#### Recursive Solution
+
+```
+## LinearSearch(A,low,high,key)
+if high < low:
+    return NOT_FOUND
+if A[low] == key:
+    return low
+return LinearSearch(A,low+1,high,key)
+```
+
+##### Running Time
+
+Recurrence defining worst-case time
+
+$T(n) = T(n-1) + c$, $T(0) = c$
+
+$T(n) = n\cdot c = O(n)$
+
+#### Iterator version
+
+```
+## LinearSearchIt(A,low,high,key)
+for i from low to high:
+    if A[i] == key:
+        return i
+return NOT_FOUND
+```
+
+### Binary Search
+
+#### Searching in a sorted array
+
+**Input: **A sorted array $A[low,...,high]\quad\forall low\leq i <high: A[i]\leq A[i+1].$ A key k.
+
+**Output: **An index, $i$ ,$low\leq i\leq high$ where $A[i]=k.$ Otherwise, the greatest index $i$, where $A[i]<k.$ Otherwise, $k<A[low]$, the result is $low-1.$ 
+
+#### Recursive Solution
+
+```
+## BinarySearch(A,low,high,key)
+if high < low:
+	return NOT_FOUND
+mid = roundDown((low + high) / 2)
+if key = A[mid]:
+    return mid
+else if key < A[mid]:
+    return BinarySearch(A,low,mid-1,key)
+else:
+    return BinarySearch(A,mid+1,high,key)
+```
+
+##### Running Time
+
+Binary Search Recurrence Relationship:
+
+$T(n) = T(\lfloor \frac{n}{2}\rfloor) + c = T(log_2n\cdot c) = T(logn)$
+
+#### Iterator version
+
+```
+## BinarySearchIt(A,low,high,key)
+while low <= high:
+	mid = roundDown((low + high) / 2)
+	if key = A[mid]:
+    	return mid
+    else if key < A[mid]:
+    	high = mid - 1
+    else:
+    
+```
+
+### Polynomial Multiplication
+
+#### Example
+
+$A(x) = 3x^2+2x+5$
+
+$B(x) = 5x^2+x+2$
+
+$A(x)B(x) = 15x^4+13x^3+33x^2+9x+10$
+
+#### Multiplying Polynomials
+
+**Input: **Two $n-1$ degree polynomials: 
+
+​            $a_{n-1}x^{n-1}+a_{n-2}x^{n-2}+...+a_1x+a_0$ and $b_{n-1}x^{n-1}+b_{n-2}x^{n-2}+...+b_1x+b_0$.
+
+**Output:** The product polynomial:
+
+​                $c_{2n-2}x^{2n-2}+c_{2n-3}x^{2n-3}+...+c_1x+c_0.$
+
+​                where $c_{2n-2} = a_{n-1}b_{n-1}$,  $c_{2n-3}=a_{n-1}b_{n-2}+a_{n-2}b_{n-1}$, ... , $c_2 = a_2b_0+a_1b_1+a_0b_2$,                       	            $c_1=a_1b_0+a_0b_1$, $c_0=a_0b_0$.
+
+##### Example
+
+**Input: ** $n=3,A=(3,2,5), B=(5,1,2)$
+
+##### Naïve Algorithm
+
+```
+## MultPoly(A,B,n)
+product = array[2n-1]
+for i from 0 to 2n-2:
+	product[i] = 0
+for i from 0 to n-1：
+	for j from 0 to n-1:
+		product[i+j] += A[i]*B[j]
+return product
+```
+
+##### Running time
+
+$O(n^2)$ 
+
+##### Naïve Divide and Conquer Algorithm 
+
+- Let $A(x) = D_1(x)x^{\frac{n}{2}}+D_0(x)$ where $D_1(x) = a_{n-1}x^{\frac{n}{2}-1}+a_{n-2}x^{\frac{n}{2}-2}+...+a_{\frac{n}{2}}$ and $D_0=a_{\frac{n}{2}-1}x^{\frac{n}{2}-1}+a_{\frac{n}{2}-2}x^{\frac{n}{2}-2}+...+a_0.$
+- Let $B(x) = E_1(x)x^{\frac{n}{2}}+E_0(x)$ where $E_1(x) = b_{n-1}x^{\frac{n}{2}-1}+b_{n-2}x^{\frac{n}{2}-2}+...+b_{\frac{n}{2}}$ and $E_0=b_{\frac{n}{2}-1}x^{\frac{n}{2}-1}+b_{\frac{n}{2}-2}x^{\frac{n}{2}-2}+...+b_0.$
+- $A(x)B(x) = (D_1(x)x^{\frac{n}{2}}+D_0(x))*(E_1(x)x^{\frac{n}{2}}+E_0(x))$ $= (D_1(x)E_1(x))x^n+(D_1(x)E_0(x)+D_0(x)E_1(x))x^{\frac{n}{2}}+D_0(x)E_0(x).$ 
+- Calculate $D_1E_1,D_1E_0,D_0E_1,D_0E_0$
+
+##### Recurrence
+
+$T(n) = 4T(\frac{n}{2})+kn$
+
+##### Example
+
+$A(x) = 4x^3+3x^2+2x+1,$  $B(x)= x^3+2x^2+3x+4.$
+
+$D_1(x) = 4x+3,$  $D_0(x) = 2x+1.$
+
+$E_1(x) = x+2,$  $E_0(x) = 3x+4.$
+
+$D_1E_1 = 4x^2+11x+6,$  $D_1E_0 = 12x^2+25x+12,$  $D_0E_1 = 2x^2+5x+2,$  $D_0E_0 = 6x^2+11x+4.$
+
+$AB = (4x^2+11x+6)x^4+(12x^2+25x+12+2x^2+5x+2)x^2+6x^2+11x+4$
+
+​        $=4x^6+11x^5+20x^4+30x^3+20x^2+11x+4$
+
+##### Divide and Conquer Algorithm
+
+```
+## Mult2(A,B,n,a_l,b_l)
+R = array[0,...,2n-1]
+if n = 1:
+	R[0] = A[a_l]*B[b_l]
+	return R
+D_1E_1 = R[0,...,n-2] = Mult2(A,B,n/2,a_l,b_l)
+D_0E_0 = R[n-1,...,2n-2] = Mult2(A,B,n/2,a_l+n/2,b_l+n/2)
+D_0E_1 = Mult2(A,B,n/2,a_l,b_l+n/2)
+D_1E_0 = Mult2(A,B,n/2,a_l+n/2,b_l)
+R[n/2,...,n+n/2-2] = D_0E_1 + D_1E_0
+```
+
+##### Running time
+
+<img src="../AppData/Roaming/Typora/typora-user-images/image-20230329233006925.png" alt="image-20230329233006925" style="zoom:50%;" />
+
+$O(n^2)$
+
+#### Karatsuba Approach
+
+$A(x) = a_1x+a_0$
+
+$B(x)=b_1x+b_0$
+
+$AB = a_1b_1x^2+(a_1b_0+a_0b_1)x+a_0b_0 = a_1b_1x^2+((a_1+a_0)(b_1+b_0)-a_1b_1-a_0b_0)x+a_0b_0$
+
+4 Multiplication $\rightarrow$ 3 Multiplication
+
+### Master Theorem
+
+$T(n) = T(\frac{n}{2})+O(1) \rightarrow T(n) = O(logn)$
+
+$T(n) = 4T(\frac{n}{2})+O(n)\rightarrow T(n) = O(n^2)$
+
+#### Theorem
+
+If $T(n)=aT(\lceil\frac{n}{b}\rceil)+O(n^d)$ for constant $a>0,b>1,d\geq0$​, then:
+$$
+T_{n} = 
+\begin{cases}
+O(n^d), & {if\quad d>log_ba}\\
+O(n^dlogn), & {if \quad d=log_ba}\\
+O(n^{log_ba}), & {if \quad d<log_ba}
+\end{cases}
+$$
+
+#### Proof
+
+$T(n) = O(n^d)+aO(\frac{n}{b})^d+...+a^iO(\frac{n}{b^i})^d+...+a^{log_bn} = O(n^d)+O(n^d)(\frac{a}{b^d})+...+O(n^d)(\frac{a}{b^d})^i+...+O(n^{log_ba})$
+
+​          $= \sum_{i=0}^{log_bn}O(n^d)(\frac{a}{b^d})^i$ 
+
+1. $d>log_ba\rightarrow \frac{a}{b^d}<1: T(n) = O(n^d)$
+2. $d=log_ba\rightarrow \frac{a}{b^d}=1: T(n) = \sum_{i=0}^{log_bn}O(n^d)= O(n^dlogn)$
+3. $d<log_ba\rightarrow \frac{a}{b^d}>1: T(n) = O(n^d)\cdot O(\frac{a}{b^d})^{log_bn} = O(a^{log_bn})=O(n^{log_ba})$
+
+### Sorting Problem
+
+**Input: ** Sequence $A[1,2,...,n].$
+
+**Output: ** Permutation $A'[1,2,...n]$ of $A[1,2,...,n]$ in non-decreasing order.
+
+#### Selection sort
+
+- Find a minimum by scanning the array
+- Swap it with the first element
+- Repeat with the remaining part of the array
+
+##### Properties
+
+- not stable
+- $O(1)$ extra space
+- $O(n^2)$ comparisons
+
+##### Running time
+
+$O(n^2)$
+
+#### Merge sort
+
+- split the array into two halves
+- sort the halves recursively
+- merge the sorted halves into one array
+
+##### Code
+
+```
+## MergeSort(A[1,2,...,n])
+if n == 1:
+	return A
+m = n/2
+L = MergeSort(A[1,2,...,m])
+R = MergeSort(A[m+1,...,n])
+A' = Merge(L,R)
+return A'
+```
+
+##### Properties
+
+- $O(n)$ extra space
+- $O(nlogn)$ comparisons
+
+##### Running time
+
+$T(n) \leq 2T(\frac{n}{2}) + O(n)$
+
+$O(n^2)$
+
+#### Lowest bound for Comparison based sorting
+
+- The tree leaf (minimum of comparisons) is $n!$
+- The depth of tree is d
+- The minimum of d is $log_2n!$ (Balanced Binary Search Tree)
+
+$log_2n!  = log_21+log_22+...+log_2n \geq log_2\frac{n}{2}+...+log_2n\geq \frac{n}{2}log_2{\frac{n}{2}} = \Omega(nlogn)$
+
+#### Non-comparison based Sorting Algorithm
+
+Count the occurrences of each number in the array (we already know what the array contains)
+
+##### Running time
+
+$O(n)$
+
+#### Quick sort
+
+##### Properties
+
+- comparison base algorithm
+- running time $O(nlogn)$ (on average)
+- efficient in practice
+
+##### Coding
+
+```
+## QuickSort(A,l,r)
+if l >= r:
+	return
+m = Partition(A,l,r)
+// A[m] is in the final position
+QuickSort(A,l,m-1)
+QuickSort(A,m+1,r)
+```
+
+```
+## Partition(A,l,r)
+x = A[l]  // pivot
+j = l
+for i from l+1 to r:
+	if A[i] <= x:
+		j += 1
+		swap A[j] and A[i]
+		//   A[l+1,...,j] <= x, A[j+1,...,i] > x
+swap A[j] and A[l]
+return j
+```
+
+##### Running time
+
+**Unbalanced partition**
+
+- In ascending or descending order:
+
+$T(n) = n+T(n-1) = n+(n-1)+(n-2)+...=O(n^2)$
+
+**Balanced partition**
+
+- In arbitrary order：
+
+$T(n) = 2T(\frac{n}{2})+n = O(nlogn)$
+
+##### Select the pivot randomly to make the partition more balanced
+
+```
+## RandomizedQuickSort(A,l,r)
+if l >= r:
+	return
+k = random number between l and r
+swap A[l] and A[k]
+m = Partition(A,l,r)
+// A[m] is in the final position
+QuickSort(A,l,m-1)
+QuickSort(A,m+1,r)
+```
+
+##### Running time analysis
+
+- Let, for $i<j$,
+  $$
+  \chi_{ij} = 
+  \begin{cases}
+  
+  1, & {A'[i]\quad and\quad A'[j] \quad are \quad compared}\\
+  0, & {otherwise}
+  \end{cases}
+  $$
+
+- For all $i$ and $j$, A'[i] and A'[j] are either compared exactly once or not compared at all (as we just compare with a pivot)
+
+- This, in particular, implies that the worst case running time is $O(n^2)$
+
+- Crucial observation: $\chi_{ij}=1$ if the first selected pivot in A'[i...j] is A'[i] or A'[j]
+
+- Then $Prob(\chi_{ij})= \frac{2}{j-i+1}$ and $E(\chi_{ij})= \frac{2}{j-i+1}$
+
+- The expected value of the running time is 
+  $$
+  \begin{aligned}
+  E\sum_{i=1}^n\sum_{j=i+1}^n\chi_{ij} &= \sum_{i=1}^n\sum_{j=i+1}^nE(\chi_{ij})\\
+  &=\sum_{i<j}\frac{2}{j-i+1}\leq2n\cdot (\frac{1}{2}+\frac{1}{3}+...+\frac{1}{n})\\
+  &=O(nlonn)
+  \end{aligned}
+  $$
+
+##### Equal elements
+
+If there are few unique elements in the array, the running order is nearly $O(n^2)$
+
+**Optimize:**
+
+$(m_1,m_2) \leftarrow Partition3(A,l,r)$ such that:
+
+- for all $l\leq k\leq m_1-1, A[k]<x$
+- for all $m_1\leq k\leq m_2, A[k]=x$
+- for all $m_2+1\leq k\leq r, A[k]>x$
+
